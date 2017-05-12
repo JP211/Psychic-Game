@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Psychic Game</title>
+</head>
+
+<body>
+    <div id="psychicGame">
+        <p><h1>The Psychic Game</h1></p>
+        <p><h4>Guess What letter I'm Thinking of!</h4></p>
+        <p><h4>Wins:</h4></p>
+        <p><h4>Losses:<h4></p>
+        <p><h4>Guesses Left:</h4></p>
+        <p><h4>Your Guesses so far:</h4></p>
+    </div>
+    <script type="text/javascript">
+
+    //Alphabet letter choices
+
+    var alphaLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+        "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    ];
+
+
+    //Variables to track stats - begins at zero
+
+    var wins = 0;
+    var losses = 0;
+    var guessesRemain = 9;
+    var guessesSoFar = [];
+    var playerChoice = null;
+
+    //Random letter picker: myChoice = Computer
+
+    var myChoice = alphaLetters[Math.floor(Math.random() * alphaLetters.length)];
+
+    console.log("Wins: " + wins + " Losses: " + losses + " guessesRemain: " + guessesRemain + " Guesses so far: " + guessesSoFar + " Computer picked: " + myChoice);
+
+    //Recognizes Player choice
+
+    document.onkeyup = function(event) {
+
+        var playerChoice = String.fromCharCode(event.keyCode).toLowerCase();
+
+        if (guessesSoFar.indexOf(playerChoice) < 0 && alphaLetters.indexOf(playerChoice) >= 0) {
+            guessesSoFar[guessesSoFar.length] = playerChoice;
+
+            guessesRemain--;
+        }
+
+        if (myChoice == playerChoice) {
+            wins++;
+            console.log("You Won");
+            guessesRemain = 9;
+            guessesSoFar = [];
+            myChoice = alphaLetters[Math.floor(Math.random() * alphaLetters.length)];
+
+            console.log("Wins: " + wins + " Losses: " + losses + " guessesRemain: " + guessesRemain + " Guesses so far: " + guessesSoFar + " Computer picked: " + myChoice);
+        }
+        if (guessesRemain == 0) {
+            losses++;
+            console.log("You Lost");
+            guessesRemain = 9;
+            guessesSoFar = [];
+            myChoice = alphaLetters[Math.floor(Math.random() * alphaLetters.length)];
+
+            console.log("Wins: " + wins + " Losses: " + losses + " guessesRemain: " + guessesRemain + " Guesses so far: " + guessesSoFar + " Computer picked: " + myChoice);
+
+
+        }
+
+        //Pushes the updates to the html to display counts
+
+        var psychicGame = "<p><h1>The Psychic Game</h1></p>" + "<p><h4>Guess What letter I'm Thinking of!</h4></p>" + "<p><h4>Wins: " + wins + "</h4></p>" + "<p><h4>Losses: " + losses + "</h4></p>" + "<p><h4>Guesses Left: " + guessesRemain + "</h4></p>" + "<p><h4>Your guesses so far: " + guessesSoFar + "</h4></p>";
+
+        document.querySelector("#psychicGame").innerHTML = psychicGame;
+
+    }
+    </script>
+</body>
+
+</html>
